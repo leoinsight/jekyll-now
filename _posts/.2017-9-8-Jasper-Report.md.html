@@ -641,11 +641,11 @@ function setDocumentScrollTop(ypos)
 <body class="markdown-body">
 <hr /> 
 <h2> <a id="layout-posttitle-jasper-reports-사용법" class="anchor" href="#layout-posttitle-jasper-reports-%EC%82%AC%EC%9A%A9%EB%B2%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>layout: post title: Jasper Reports 사용법</h2> 
-<p>Jasper Reports 설정 및 사용법</p> 
+<p>Spring Boot와 연동한 Jasper Reports 설정 및 사용법을 기록.</p> 
 <h2> <a id="환경설정-spring-boot-151-jasper-studio-640final-기준" class="anchor" href="#%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95-spring-boot-151-jasper-studio-640final-%EA%B8%B0%EC%A4%80" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>환경설정 (Spring Boot 1.5.1, Jasper Studio 6.4.0final 기준)</h2> 
 <h3> <a id="pomxml" class="anchor" href="#pomxml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pom.xml</h3> 
 <div class="highlight highlight-text-xml">
- <pre>...
+ <pre><span class="pl-c"><span class="pl-c">&lt;!--</span>...<span class="pl-c">--&gt;</span></span>
 	&lt;<span class="pl-ent">repositories</span>&gt;
 		<span class="pl-c"><span class="pl-c">&lt;!--</span> local <span class="pl-c">--&gt;</span></span>
 		&lt;<span class="pl-ent">repository</span>&gt;
@@ -656,7 +656,7 @@ function setDocumentScrollTop(ypos)
 	&lt;/<span class="pl-ent">repositories</span>&gt;
 
 	&lt;<span class="pl-ent">dependencies</span>&gt;
-	...
+	<span class="pl-c"><span class="pl-c">&lt;!--</span>...<span class="pl-c">--&gt;</span></span>
 		&lt;<span class="pl-ent">dependency</span>&gt;
 		    &lt;<span class="pl-ent">groupId</span>&gt;net.sf.jasperreports&lt;/<span class="pl-ent">groupId</span>&gt;
 		    &lt;<span class="pl-ent">artifactId</span>&gt;jasperreports&lt;/<span class="pl-ent">artifactId</span>&gt;
@@ -679,13 +679,13 @@ function setDocumentScrollTop(ypos)
 			&lt;<span class="pl-ent">version</span>&gt;6.4.0&lt;/<span class="pl-ent">version</span>&gt;
 		&lt;/<span class="pl-ent">dependency</span>&gt;
 	&lt;/<span class="pl-ent">dependencies</span>&gt;
-...</pre>
+<span class="pl-c"><span class="pl-c">&lt;!--</span>...<span class="pl-c">--&gt;</span></span></pre>
 </div> 
-<br /> *[참고] local repository* 
-<p>![local-repo]({{ site.baseurl }}/images/local-repo.png)</p> 
+<br /> 
+<p><em>[참고] local repository</em><br /> ![local-repo]({{ site.baseurl }}/images/local-repo.png)</p> 
 <h3> <a id="webconfigurationjava-configuration-클래스" class="anchor" href="#webconfigurationjava-configuration-%ED%81%B4%EB%9E%98%EC%8A%A4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WebConfiguration.java (@Configuration 클래스)</h3> 
 <div class="highlight highlight-source-java">
- <pre><span class="pl-c1">...</span>
+ <pre><span class="pl-c"><span class="pl-c">//</span>...</span>
 	<span class="pl-k">@Bean</span>
 	<span class="pl-k">public</span> <span class="pl-smi">JasperReportsViewResolver</span> getJasperReportsViewResolver() {
 		<span class="pl-smi">JasperReportsViewResolver</span> resolver <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">JasperReportsViewResolver</span>();
@@ -698,11 +698,11 @@ function setDocumentScrollTop(ypos)
 	    resolver<span class="pl-k">.</span>setViewClass(<span class="pl-smi">JasperReportsMultiFormatView</span><span class="pl-k">.</span>class);
 	    <span class="pl-k">return</span> resolver;
 	}
-<span class="pl-c1">...</span></pre>
+<span class="pl-c"><span class="pl-c">//</span>...</span></pre>
 </div> 
 <h3> <a id="reportcontrollerjava" class="anchor" href="#reportcontrollerjava" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ReportController.java</h3> 
 <div class="highlight highlight-source-java">
- <pre><span class="pl-c1">...</span>
+ <pre><span class="pl-c"><span class="pl-c">//</span>...</span>
 	<span class="pl-k">@GetMapping</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>/{reportName}/{inspSeqNum}<span class="pl-pds">&quot;</span></span>)
 	<span class="pl-k">public</span> <span class="pl-smi">ModelAndView</span> reportByFormat(<span class="pl-k">@PathVariable</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>reportName<span class="pl-pds">&quot;</span></span>) <span class="pl-smi">String</span> reportName,
 			<span class="pl-k">@PathVariable</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>inspSeqNum<span class="pl-pds">&quot;</span></span>) <span class="pl-smi">Long</span> inspSeqNum, <span class="pl-k">@RequestParam</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>format<span class="pl-pds">&quot;</span></span>) <span class="pl-smi">String</span> format, <span class="pl-smi">ModelAndView</span> mv) throws <span class="pl-smi">Exception</span> {
@@ -723,14 +723,104 @@ function setDocumentScrollTop(ypos)
 		
 		<span class="pl-k">return</span> mv;
 	}
-<span class="pl-c1">...</span></pre>
+<span class="pl-c"><span class="pl-c">//</span>...</span></pre>
 </div> 
+<br /> 
 <p><em>[참고] 호출 URL 예시</em></p> 
 <blockquote> 
  <p>localhost:8080/rest/reports/RPT_Book1/999?format=pdf</p> 
 </blockquote> 
 <h2> <a id="jasper-studio-설정" class="anchor" href="#jasper-studio-%EC%84%A4%EC%A0%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Jasper Studio 설정</h2> 
 <h3> <a id="프로젝트-하위-폴더생성-및-build-path-설정" class="anchor" href="#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%95%98%EC%9C%84-%ED%8F%B4%EB%8D%94%EC%83%9D%EC%84%B1-%EB%B0%8F-build-path-%EC%84%A4%EC%A0%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>프로젝트 하위 폴더생성 및 build path 설정</h3> 
-<p>![local-repo]({{ site.baseurl }}/images/jasper-studio-project.png)</p>
+<ol> 
+ <li> <p>src/main/resources/jasperreports 생성<br /> ![jasper-studio-project]({{ site.baseurl }}/images/jasper-studio-project.png)</p> </li> 
+ <li> <p>프로젝트 Properties &gt; Java Build Path &gt; Source &gt; Add Folder... &gt; resources 폴더 선택, Allow output folders for source folders<br /> ![jasper-studio-buildpath]({{ site.baseurl }}/images/jasper-studio-buildpath.png)</p> </li> 
+</ol> 
+<h3> <a id="pdf-한글-관련-설정" class="anchor" href="#pdf-%ED%95%9C%EA%B8%80-%EA%B4%80%EB%A0%A8-%EC%84%A4%EC%A0%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pdf 한글 관련 설정</h3> 
+<p>Jaspersoft Studio &gt; Preferences &gt; Fonts &gt; Add</p> 
+<ul> 
+ <li>Family Name: NANUMGOTHIC</li> 
+ <li>TrueType(.ttf): ${project.basedir}\src\main\resources\static\font\NANUMGOTHIC.TTF</li> 
+ <li>PDF Encoding: Identity-H (Unicode with horizontal writing)</li> 
+ <li>Embed this font in PDF document (check)</li> 
+ <li>Export to Local Repository (${project.basedir}\local-repo) 이하 groupId\artifactId 
+  <ul> 
+   <li>ex) D:\project\bsa\workspace\boot-web\local-repo\net\sf\jasperreports\font\extension\NANUMGOTHIC\1.0\NANUMGOTHIC-1.0.jar ![jasper-studio-buildpath]({{ site.baseurl }}/images/jasper-studio-fonts.png)</li> 
+  </ul> </li> 
+</ul> 
+<h3> <a id="report-구성" class="anchor" href="#report-%EA%B5%AC%EC%84%B1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Report 구성</h3> 
+<ol> 
+ <li> <p>단일 Report (List) 구성 방법 (RPT_TEST_LIST1.jrxml)</p> 
+  <ol start="0"> 
+   <li>ReportController에서 넘어오는 Model Object의 attributeName 이 <em>imgPathList</em> 라고 가정</li> 
+  </ol> 
+  <ul> 
+   <li>imgPathList 의 type은 <code>List&lt;Map&lt;&gt;&gt; 또는 List&lt;VO객체&gt;</code> </li> 
+  </ul> 
+  <ol> 
+   <li>Parameters &gt; Create Parameter</li> 
+  </ol> 
+  <ul> 
+   <li>Name: imgPathList</li> 
+   <li>Class: <code>net.sf.jasperreports.engine.JRBeanCollectionDataSource</code> </li> 
+  </ul> 
+  <ol start="2"> 
+   <li>Create Dataset</li> 
+  </ol> 
+  <ul> 
+   <li>Name: imgPathList</li> 
+   <li>생성된 Dataset(imgPathList)에 Field 추가 (attPath)</li> 
+  </ul> 
+  <ol start="3"> 
+   <li>Detail band 에 List Element 추가 (Palette &gt; Basic Elements 에서 드래그앤드랍)</li> 
+  </ol> 
+  <ul> 
+   <li>List Properties &gt; Dataset Run 선택: imgPathList (생성한 Dataset)</li> 
+   <li>Use a JRDataSource expression 설정: $P{imgPathList} (생성한 Parameter)</li> 
+   <li><em>List 내부에서 전달받아 사용할 값이 필요한 경우는 Parameters 버튼을 클릭하여 Dataset Parameters 를 추가</em></li> 
+  </ul> 
+  <ol start="4"> 
+   <li>List Contents 구성 (List 더블클릭)</li> 
+  </ol> 
+  <ul> 
+   <li>List에 Image Element 추가 (Palette &gt; Basic Elements 에서 드래그앤드랍)</li> 
+   <li>Image Properties &gt; Expression 값 설정: $F{attPath}</li> 
+  </ul> 
+  <ol start="5"> 
+   <li>Table 구성 방법도 List와 동일</li> 
+  </ol> 
+  <ul> 
+   <li>Controller에서 넘어오는 Parameter 생성 (예.<em>itemList</em>, <code>net.sf.jasperreports.engine.JRBeanCollectionDataSource</code>)</li> 
+   <li>Name: itemList 로 Dataset 생성, Filed 추가 (예.<em>ITEM_VALUE</em>)</li> 
+   <li>List Properties &gt; Dataset Run 선택: itemList (생성한 Dataset)</li> 
+   <li>Use a JRDataSource expression 설정: $P{itemList} (생성한 Parameter)</li> 
+   <li>Detail band 에 Table 추가 (Palette &gt; Basic Elements 에서 드래그앤드랍)</li> 
+   <li><em>Table 내부에서 전달받아 사용할 값이 필요한 경우는 Parameters 버튼을 클릭하여 Dataset Parameters 를 추가</em></li> 
+   <li>Table에 Text Field 추가 (Palette &gt; Basic Elements 에서 드래그앤드랍)</li> 
+   <li>TextField Properties &gt; Expression 값 설정: $F{ITEM_VALUE}</li> 
+  </ul> </li> 
+</ol> 
+<h3> <a id="report-book-구성" class="anchor" href="#report-book-%EA%B5%AC%EC%84%B1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Report Book 구성</h3> 
+<ol> 
+ <li> <p>Report Book 구성 방법 (RPT_TEST_Book1.jrxml)</p> 
+  <ol> 
+   <li> <p>File &gt; New &gt; Jasper Report &gt; Report Book 템플릿 선택</p> </li> 
+   <li> <p>Content &gt; Add new book part &gt; Select an existing report, Select a report file... &gt; Workspace resource, Browse... &gt; RPT_TEST_LIST1.jrxml 선택</p> </li> 
+   <li> <p>Connection &gt; Use a JRDataSource expression, <code>new net.sf.jasperreports.engine.JREmptyDataSource()</code> 입력</p> </li> 
+   <li> <p>RPT_TEST_Book1의 파라미터 생성 (from Controller)</p> </li> 
+  </ol> 
+  <ul> 
+   <li>Parameters &gt; Create Parameter</li> 
+   <li>Name: imgPathList</li> 
+   <li>Class: <code>net.sf.jasperreports.engine.JRBeanCollectionDataSource</code> </li> 
+  </ul> 
+  <ol start="5"> 
+   <li>RPT_TEST_LIST1에 넘길 파라미터 설정 (from Report Book)</li> 
+  </ol> 
+  <ul> 
+   <li>Content RPT_TEST_LIST1.jasper 선택 &gt; Properties &gt; Data 탭 &gt; Edit Parameters 버튼 클릭</li> 
+   <li>Add 버튼 클릭 &gt; Parameter Name: imgPathList (Report Book 파라미터), Parameter Expression: $P{imgPathList} 선택</li> 
+  </ul> </li> 
+</ol>
 </body>
 </html>
