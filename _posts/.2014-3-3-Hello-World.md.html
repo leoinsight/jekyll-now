@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>C:\Users\mt.kwon\git\leoinsight.github.io\_posts\.2017-9-8-Jasper-Report.md.html</title>
+<title>C:\Users\mt.kwon\git\leoinsight.github.io\_posts\.2014-3-3-Hello-World.md.html</title>
 
 
 <style type="text/css">
@@ -640,97 +640,9 @@ function setDocumentScrollTop(ypos)
 </head>
 <body class="markdown-body">
 <hr /> 
-<h2> <a id="layout-posttitle-jasper-reports-사용법" class="anchor" href="#layout-posttitle-jasper-reports-%EC%82%AC%EC%9A%A9%EB%B2%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>layout: post title: Jasper Reports 사용법</h2> 
-<p>Jasper Reports 설정 및 사용법</p> 
-<h2> <a id="환경설정-spring-boot-151-jasper-studio-640final-기준" class="anchor" href="#%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95-spring-boot-151-jasper-studio-640final-%EA%B8%B0%EC%A4%80" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>환경설정 (Spring Boot 1.5.1, Jasper Studio 6.4.0final 기준)</h2> 
-<h3> <a id="pomxml" class="anchor" href="#pomxml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pom.xml</h3> 
-<div class="highlight highlight-text-xml">
- <pre>...
-	&lt;<span class="pl-ent">repositories</span>&gt;
-		<span class="pl-c"><span class="pl-c">&lt;!--</span> local <span class="pl-c">--&gt;</span></span>
-		&lt;<span class="pl-ent">repository</span>&gt;
-			&lt;<span class="pl-ent">id</span>&gt;local-repo&lt;/<span class="pl-ent">id</span>&gt;
-			&lt;<span class="pl-ent">name</span>&gt;local Repository&lt;/<span class="pl-ent">name</span>&gt;
-			&lt;<span class="pl-ent">url</span>&gt;file://${project.basedir}/local-repo&lt;/<span class="pl-ent">url</span>&gt;
-		&lt;/<span class="pl-ent">repository</span>&gt;
-	&lt;/<span class="pl-ent">repositories</span>&gt;
-
-	&lt;<span class="pl-ent">dependencies</span>&gt;
-	...
-		&lt;<span class="pl-ent">dependency</span>&gt;
-		    &lt;<span class="pl-ent">groupId</span>&gt;net.sf.jasperreports&lt;/<span class="pl-ent">groupId</span>&gt;
-		    &lt;<span class="pl-ent">artifactId</span>&gt;jasperreports&lt;/<span class="pl-ent">artifactId</span>&gt;
-		    &lt;<span class="pl-ent">version</span>&gt;6.4.0&lt;/<span class="pl-ent">version</span>&gt;
-		&lt;/<span class="pl-ent">dependency</span>&gt;
-		&lt;<span class="pl-ent">dependency</span>&gt;
-		    &lt;<span class="pl-ent">groupId</span>&gt;org.apache.xmlgraphics&lt;/<span class="pl-ent">groupId</span>&gt;
-		    &lt;<span class="pl-ent">artifactId</span>&gt;xmlgraphics-commons&lt;/<span class="pl-ent">artifactId</span>&gt;
-		    &lt;<span class="pl-ent">version</span>&gt;2.2&lt;/<span class="pl-ent">version</span>&gt;
-		&lt;/<span class="pl-ent">dependency</span>&gt;
-		<span class="pl-c"><span class="pl-c">&lt;!--</span> local repo <span class="pl-c">--&gt;</span></span>
-		&lt;<span class="pl-ent">dependency</span>&gt;
-			&lt;<span class="pl-ent">groupId</span>&gt;net.sf.jasperreports.font.extension&lt;/<span class="pl-ent">groupId</span>&gt;
-			&lt;<span class="pl-ent">artifactId</span>&gt;NANUMGOTHIC&lt;/<span class="pl-ent">artifactId</span>&gt;
-			&lt;<span class="pl-ent">version</span>&gt;1.0&lt;/<span class="pl-ent">version</span>&gt;
-		&lt;/<span class="pl-ent">dependency</span>&gt;
-		&lt;<span class="pl-ent">dependency</span>&gt;
-			&lt;<span class="pl-ent">groupId</span>&gt;net.sf.jasperreports&lt;/<span class="pl-ent">groupId</span>&gt;
-			&lt;<span class="pl-ent">artifactId</span>&gt;jasperreports-functions&lt;/<span class="pl-ent">artifactId</span>&gt;
-			&lt;<span class="pl-ent">version</span>&gt;6.4.0&lt;/<span class="pl-ent">version</span>&gt;
-		&lt;/<span class="pl-ent">dependency</span>&gt;
-	&lt;/<span class="pl-ent">dependencies</span>&gt;
-...</pre>
-</div> 
-<br /> *[참고] local repository* 
-<p>![local-repo]({{ site.baseurl }}/images/local-repo.png)</p> 
-<h3> <a id="webconfigurationjava-configuration-클래스" class="anchor" href="#webconfigurationjava-configuration-%ED%81%B4%EB%9E%98%EC%8A%A4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WebConfiguration.java (@Configuration 클래스)</h3> 
-<div class="highlight highlight-source-java">
- <pre><span class="pl-c1">...</span>
-	<span class="pl-k">@Bean</span>
-	<span class="pl-k">public</span> <span class="pl-smi">JasperReportsViewResolver</span> getJasperReportsViewResolver() {
-		<span class="pl-smi">JasperReportsViewResolver</span> resolver <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">JasperReportsViewResolver</span>();
-	    resolver<span class="pl-k">.</span>setPrefix(<span class="pl-s"><span class="pl-pds">&quot;</span>classpath:/jasperreports/<span class="pl-pds">&quot;</span></span>);
-	    resolver<span class="pl-k">.</span>setSuffix(<span class="pl-s"><span class="pl-pds">&quot;</span>.jrxml<span class="pl-pds">&quot;</span></span>);
-	    
-	    resolver<span class="pl-k">.</span>setViewNames(<span class="pl-s"><span class="pl-pds">&quot;</span>RPT_*<span class="pl-pds">&quot;</span></span>);
-	    resolver<span class="pl-k">.</span>setReportDataKey(<span class="pl-s"><span class="pl-pds">&quot;</span>datasource<span class="pl-pds">&quot;</span></span>);
-	    resolver<span class="pl-k">.</span>setSubReportDataKeys(<span class="pl-s"><span class="pl-pds">&quot;</span>subdata<span class="pl-pds">&quot;</span></span>);
-	    resolver<span class="pl-k">.</span>setViewClass(<span class="pl-smi">JasperReportsMultiFormatView</span><span class="pl-k">.</span>class);
-	    <span class="pl-k">return</span> resolver;
-	}
-<span class="pl-c1">...</span></pre>
-</div> 
-<h3> <a id="reportcontrollerjava" class="anchor" href="#reportcontrollerjava" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ReportController.java</h3> 
-<div class="highlight highlight-source-java">
- <pre><span class="pl-c1">...</span>
-	<span class="pl-k">@GetMapping</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>/{reportName}/{inspSeqNum}<span class="pl-pds">&quot;</span></span>)
-	<span class="pl-k">public</span> <span class="pl-smi">ModelAndView</span> reportByFormat(<span class="pl-k">@PathVariable</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>reportName<span class="pl-pds">&quot;</span></span>) <span class="pl-smi">String</span> reportName,
-			<span class="pl-k">@PathVariable</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>inspSeqNum<span class="pl-pds">&quot;</span></span>) <span class="pl-smi">Long</span> inspSeqNum, <span class="pl-k">@RequestParam</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>format<span class="pl-pds">&quot;</span></span>) <span class="pl-smi">String</span> format, <span class="pl-smi">ModelAndView</span> mv) throws <span class="pl-smi">Exception</span> {
-	
-		<span class="pl-c"><span class="pl-c">//</span> List (Sample Code)</span>
-		<span class="pl-k">List&lt;imgVO&gt;</span> imgList <span class="pl-k">=</span> service<span class="pl-k">.</span>getImgList(<span class="pl-c1">...</span>);
-		<span class="pl-k">List&lt;<span class="pl-k">Map&lt;<span class="pl-smi">String</span>, <span class="pl-smi">String</span>&gt;</span>&gt;</span> imgPathList <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">ArrayList&lt;<span class="pl-k">Map&lt;<span class="pl-smi">String</span>, <span class="pl-smi">String</span>&gt;</span>&gt;</span>();
-		<span class="pl-k">for</span> (<span class="pl-k">int</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>; i <span class="pl-k">&lt;</span> imgList<span class="pl-k">.</span>size(); i<span class="pl-k">++</span>) {
-			<span class="pl-k">Map&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Object</span>&gt;</span> map <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-k">HashMap&lt;<span class="pl-smi">String</span>, <span class="pl-smi">Object</span>&gt;</span>();
-			map<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">&quot;</span>attPath<span class="pl-pds">&quot;</span></span>, imgList<span class="pl-k">.</span>get(i)<span class="pl-k">.</span>getAttPath());
-			imgPathList<span class="pl-k">.</span>add(map);
-		}
-		
-		mv<span class="pl-k">.</span>setViewName(reportName);		<span class="pl-c"><span class="pl-c">//</span> jrxml 파일명</span>
-		mv<span class="pl-k">.</span>addObject(<span class="pl-s"><span class="pl-pds">&quot;</span>format<span class="pl-pds">&quot;</span></span>, format);	<span class="pl-c"><span class="pl-c">//</span> &quot;pdf&quot;</span>
-		mv<span class="pl-k">.</span>addObject(<span class="pl-s"><span class="pl-pds">&quot;</span>datasource<span class="pl-pds">&quot;</span></span>, <span class="pl-k">new</span> <span class="pl-smi">JREmptyDataSource</span>());
-		mv<span class="pl-k">.</span>addObject(<span class="pl-s"><span class="pl-pds">&quot;</span>imgPathList<span class="pl-pds">&quot;</span></span>, <span class="pl-k">new</span> <span class="pl-smi">JRBeanCollectionDataSource</span>(imgPathList));
-		
-		<span class="pl-k">return</span> mv;
-	}
-<span class="pl-c1">...</span></pre>
-</div> 
-<p><em>[참고] 호출 URL 예시</em></p> 
-<blockquote> 
- <p>localhost:8080/rest/reports/RPT_Book1/999?format=pdf</p> 
-</blockquote> 
-<h2> <a id="jasper-studio-설정" class="anchor" href="#jasper-studio-%EC%84%A4%EC%A0%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Jasper Studio 설정</h2> 
-<h3> <a id="프로젝트-하위-폴더생성-및-build-path-설정" class="anchor" href="#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%95%98%EC%9C%84-%ED%8F%B4%EB%8D%94%EC%83%9D%EC%84%B1-%EB%B0%8F-build-path-%EC%84%A4%EC%A0%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>프로젝트 하위 폴더생성 및 build path 설정</h3> 
-<p>![local-repo]({{ site.baseurl }}/images/jasper-studio-project.png)</p>
+<h2> <a id="layout-posttitle-youre-up-and-running" class="anchor" href="#layout-posttitle-youre-up-and-running" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>layout: post title: You're up and running!</h2> 
+<p>Next you can update your site name, avatar and other options using the _config.yml file in the root of your repository (shown below).</p> 
+<p>![_config.yml]({{ site.baseurl }}/images/config.png)</p> 
+<p>The easiest way to make your first post is to edit this one. Go into /_posts/ and update the Hello World markdown file. For more instructions head over to the <a href="https://github.com/barryclark/jekyll-now">Jekyll Now repository</a> on GitHub.</p>
 </body>
 </html>
