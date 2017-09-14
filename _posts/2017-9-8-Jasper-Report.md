@@ -118,7 +118,7 @@ Jaspersoft Studio > Preferences > Fonts > Add
 - Embed this font in PDF document (check)
 - Export to Local Repository (${project.basedir}\local-repo) 이하 groupId\artifactId
 	- ex) D:\project\bsa\workspace\boot-web\local-repo\net\sf\jasperreports\font\extension\NANUMGOTHIC\1.0\NANUMGOTHIC-1.0.jar
-![jasper-studio-buildpath]({{ site.baseurl }}/images/jasper-studio-fonts.png)
+![jasper-studio-fonts]({{ site.baseurl }}/images/jasper-studio-fonts.png)
 
 ### Report 구성
 1. 단일 Report (List) 구성 방법 (RPT_TEST_LIST1.jrxml)
